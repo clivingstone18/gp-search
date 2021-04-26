@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Simple Map</title>
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <link rel="stylesheet" type="text/css" href="./style.css" />
+    <script src="./index.js"></script>
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@100&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">    
+  </head>
+
+<body>
+
+  
+      <div class="pac-card" id="pac-card">
+        <div>
+          <div id="title">Find a Medical Practitioner </div>
+        </div>
+        <div id="pac-container">
+          <input id="pac-input" type="text" placeholder="Enter a suburb or postcode" />
+        </div>
+        <select name="facilities" multiple="" class="ui fluid dropdown">
+          <option value="">Skills</option>
+        <option value="angular">Angular</option>
+        <option value="css">CSS</option>
+        <option value="design">Graphic Design</option>
+        <option value="ember">Ember</option>
+        <option value="html">HTML</option>
+        <option value="ia">Information Architecture</option>
+        <option value="javascript">Javascript</option>
+        <option value="mech">Mechanical Engineering</option>
+        <option value="meteor">Meteor</option>
+        <option value="node">NodeJS</option>
+        <option value="plumbing">Plumbing</option>
+        <option value="python">Python</option>
+        <option value="rails">Rails</option>
+        <option value="react">React</option>
+        <option value="repair">Kitchen Repair</option>
+        <option value="ruby">Ruby</option>
+        <option value="ui">UI Design</option>
+        <option value="ux">User Experience</option>
+        </select>
+
+
+
+
+ 
+
+      </div>
+
+      <div id="map"></div>
+
+      </div>
+
+  
+  
+
+
+
+<!-- Async script executes immediately and must be after any DOM elements used in callback. -->
+<script
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAQ2OpuRvI5_tUxAxhyJUn7oEMHP_krODc&callback=initMap&libraries=places&v=weekly"
+  async
+></script>
+<script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"></script><script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+  <script> 
+    $(document).ready(function(){
+         $('.ui.dropdown') .dropdown();
+   });
+   </script>
+</body>
+</html>

@@ -1,0 +1,82 @@
+/* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+       #map {
+        height: 100%;
+      }
+      
+      /* Optional: Makes the sample page fill the window. */
+      html,
+      body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      
+      #description {
+        font-family: Lato;
+        font-size: 15px;
+        font-weight: 300;
+      }
+
+      #infowindow {
+        padding: 2rem;
+        font-family: Lato;
+        background: yellow;
+      }
+      
+      #map #infowindow-content {
+        display: inline;
+
+      }
+      
+      #map .customWindow {
+        padding: 1.5rem;
+      }
+      
+      .pac-card {
+        margin: 10px 10px 0 0;
+        border-radius: 2px 0 0 2px;
+        box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        outline: none;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+        background-color: #fff;
+        font-family: Lato;
+      }
+
+      .pac-controls {
+        display: inline-block;
+        padding: 5px 11px;
+      }
+      
+      .pac-controls label {
+        font-family: Lato;
+        font-size: 13px;
+        font-weight: 300;
+      }
+      
+      #pac-input {
+        background-color: #fff;
+        font-family: Lato;
+        font-size: 15px;
+        font-weight: 300;
+        padding: 0 11px 0 13px;
+        text-overflow: ellipsis;
+        width: 400px;
+        height: 50px;
+        border: none;
+      }
+      
+      #pac-input:focus {
+        border: 1px solid #b19cd9;
+        outline: none;
+      }
+      
+      #title {
+        color: #fff;
+        background-color: #b19cd9;
+        font-size: 25px;
+        font-weight: 500;
+        padding: 6px 12px;
+      }
+      
