@@ -10,7 +10,7 @@ $core = "https://healthengine.com.au";
 $url = "https://healthengine.com.au/appointments/gp/" . $state . "/" . $suburb . "-" . $postcode . "/NextAvailable?acceptsNewPatients=true";
 $html = file_get_html($url);
 $links = $html->find('a[class="ProfileNamestyles__StyledLink-tgn88t-0 fLcCFy"]');
-for ($i = 0; $i < 3; $i++) {
+for ($i = 0; $i < count($links); $i++) {
 
     $practiceInfo = [];
     $practiceInfo["staff"] = [];

@@ -4,6 +4,11 @@
         height: 100%;
       }
       
+      div.toggle-box {
+        display: flex;
+        justify-content: space-around;
+        padding: 1rem;
+      }
       /* Optional: Makes the sample page fill the window. */
       html,
       body {
