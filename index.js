@@ -7,15 +7,10 @@ let localStorage = window.localStorage;
 
 function generateHtmlPracInfo(body) {
   return `
-    <style>
-    h2.customH2 {font-weight: 300}
-    </style>
     <div class="customWindow">
     <h1 class="customH1">${body.main.practiceName}</h1>
     <h2 class="customH2">${body.main.address}</h2>
     ${body.languages.map((language) => `<p>${language}</p>`).join("")}
-    ${body.main.telehealth ? "<h2>Telehealth Available</h2>" : ""} 
-    ${body.main.bulkbills ? "<h2>Bulk bills</h2>" : ""} 
     ${body.main.rating ? `<h2>${body.main.rating} approval rating</h2>` : ""} 
     </div>
     `;
@@ -26,6 +21,7 @@ function initMap() {
   let filteredInfo;
   let markers = [];
   let originalMarkers = [];
+  let currentFilters = [];
 
   const infowindow = new google.maps.InfoWindow();
   const map = new google.maps.Map(document.getElementById("map"), {
@@ -65,8 +61,31 @@ function initMap() {
     let state = suburbAndPostcode[suburbAndPostcode.length - 2];
     let suburb = suburbAndPostcode.slice(0, suburbAndPostcode.length - 2).join("-");
 
-    const teleToggle = document.getElementById("teleToggle");
-    const bulkToggle = document.getElementById("bulkToggle");
+    function filterInfo() {
+      clearMarkers();
+      let currPositions = [];
+      if (currentFilters.length == 0) {
+        filteredInfo = currInfo;
+      }
+      filteredInfo = currInfo.filter(curr => currentFilters.every(x => curr.facilities.includes(x)));
+      // what about existing markers 
+      filteredInfo.forEach(info=>currPositions.push({"lat": info.lat, "lng": info.lng}));
+      originalMarkers = markers;
+      markers = markers.filter((marker) => {return currPositions.some(coordinate => coordinate["lat"] ==  marker.position.lat() 
+        && coordinate["lng"] ==  marker.position.lng())
+      })
+      markers.forEach(marker=>marker.setVisible(true));
+
+    }
+
+    const facilitiesSelector = document.getElementById("facilitiesSelector");
+    facilitiesSelector.addEventListener("change", function(e) {
+      markers = originalMarkers;
+      currentFilters = ($('#facilitiesSelector').val());
+      filterInfo();
+      console.log(filteredInfo);
+    });
+
 
     // adds marker to the list 
     function addMarker(body) {
@@ -113,35 +132,12 @@ function initMap() {
           infoParsed[i].lng = pos[i].lng();
           addMarker(infoParsed[i]);
         }
+        originalMarkers = markers;
+        console.log(originalMarkers);
         localStorage.setItem(state+suburb+postcode, JSON.stringify(infoParsed));
-
       })
     }
-    
-    teleToggle.addEventListener("change", function () {
-      if (this.checked) {
-        clearMarkers();
-
-        // the filter is applied
-        filteredInfo = currInfo.filter((info) => info.main.telehealth);
-        let currPositions = [];
-        // what about existing markers 
-        filteredInfo.forEach(info=>currPositions.push({"lat": info.lat, "lng": info.lng}));
-        originalMarkers = markers;
-        markers = markers.filter((marker) => {
-          return currPositions.some(coordinate => coordinate["lat"] ==  marker.position.lat() 
-          && coordinate["lng"] ==  marker.position.lng())
-        })
-      }
-      else {
-        filteredInfo = currInfo;
-        markers = originalMarkers;
-      }
-      markers.forEach(marker=>marker.setVisible(true));
-
-    })
-
-    bulkToggle.addEventListener("change", () => console.log("BULKTOGGLED"));
+   
 
     if (!place.geometry || !place.geometry.location) {
       // User entered the name of a Place that was not suggested and
@@ -171,6 +167,8 @@ function initMap() {
       for (let i = 0; i < currInfo.length; i++) {
         addMarker(currInfo[i]);
       }
+      originalMarkers = markers;
+
     } else {
       fetch("scraper.php", { method: "POST", body: formData })
         .then(function (response) {

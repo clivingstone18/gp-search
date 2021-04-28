@@ -35,8 +35,6 @@ for ($i = 0; $i < count($links); $i++) {
     $practiceInfo["languages"] = $langs_arr;
     $phone = trim($html->find('li[class="phone phone-container"]', 0)->find("span", 0)->plaintext);
     
-
-
     $facilities = $html->find('div[class="practice-facilities one-third"]', 0);
     $facilities_arr = [];
     if ($facilities) {
@@ -48,7 +46,8 @@ for ($i = 0; $i < count($links); $i++) {
             }
         }
     }
-
+    array_push($facilities_arr, $telehealth);
+    array_push($facilities_arr, $bulkbills);
     $practiceInfo["facilities"] = $facilities_arr;
     $staff = $html->find('div[class="listing-details with-picture"]');
 
@@ -60,8 +59,7 @@ for ($i = 0; $i < count($links); $i++) {
         $staffMem = ["name"=>$name, "prac_type"=>$prac_type, "gender"=>$gender];
         array_push($practiceInfo["staff"], $staffMem);
     }
-    $practiceInfo["main"] = ["address" => trim($address), "telehealth" => $telehealth, 
-    "bulkbills" => $bulkbills, "practiceName" => $pracName, "rating" => $rating, "phone" => $phone]; 
+    $practiceInfo["main"] = ["address" => trim($address), "practiceName" => $pracName, "rating" => $rating, "phone" => $phone]; 
 
     echo json_encode($practiceInfo);
 }
